@@ -20,7 +20,12 @@ class CustomFields(PolarionObject, ABC):
         """
         if not self.isCustomFieldAllowed(key):
             raise Exception(f"key {key} is not allowed for this workitem")
-
+        # fix custom field object set error
+        if type(value) == str:
+            value = value
+        elif type(value) == dict and "content" in value and "type" in value and "contentLossy" in value:
+            value = self._polarion.TextType(
+                            content=value["content"], type=value["type"], contentLossy=value["contentLossy"])
         if self.customFields is None:
             # nothing exists, create a custom field structure
             self.customFields = self._polarion.ArrayOfCustomType()
