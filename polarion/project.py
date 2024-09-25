@@ -65,6 +65,15 @@ class Project(object):
         :rtype: Workitem
         """
         return Workitem(self.polarion, self, id)
+    
+    def getWorkitemByUri(self, uri: str):
+        """Get a workitem by string
+
+        :param uri: The uri of the project workitem (PREF-123).
+        :return: The request workitem
+        :rtype: Workitem
+        """
+        return Workitem(self.polarion, self, uri=uri)
 
     def getPlan(self, id: str):
         """Get a plan by string
@@ -321,6 +330,15 @@ class Project(object):
         :return: Document
         """
         return Document(self.polarion, self, location=location)
+
+    def getDocumentByUri(self, uri):
+        """
+        Get a document by location.
+
+        :param location: Location of the document.
+        :return: Document
+        """
+        return Document(self.polarion, self, uri=uri)
 
     def __repr__(self):
         return f'Polarion project {self.name} prefix {self.tracker_prefix}'
