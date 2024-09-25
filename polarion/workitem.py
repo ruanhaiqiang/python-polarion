@@ -360,6 +360,15 @@ class Workitem(CustomFields, Comments):
             self.status.id = status
             self.save()
 
+    def setValue(self, key, value):
+        """
+        Sets the value of a workitem field and saves the workitem, not respecting any project configured limits or requirements.
+
+        :param key: name of the field
+        :param value: value of the field
+        """
+        setattr(self, key, value)
+
     def getDescription(self):
         """
         Get a comment if available. The comment may contain HTML if edited in Polarion!
@@ -492,6 +501,16 @@ class Workitem(CustomFields, Comments):
         @return:
         """
         return [item[1] for item in self.getLinkedItemWithRoles()]
+    
+    def getBackLinkedWorkitems(self):
+        """
+        Get back linked workitems
+
+        @return: Array of  Workitem
+        @return:
+        """
+        service = self._polarion.getService('Tracker')
+        return service.getBackLinkedWorkitems(self.uri)
 
     def hasAttachment(self):
         """
