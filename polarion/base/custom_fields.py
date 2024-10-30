@@ -39,7 +39,7 @@ class CustomFields(PolarionObject, ABC):
             else:
                 # custom field is not there, add it.
                 self.customFields.Custom.append(self._polarion.CustomType(key=key, value=value))
-        self.save()
+        # self.save()
 
     def getCustomField(self, key):
         """
