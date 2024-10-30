@@ -448,8 +448,8 @@ class Workitem(CustomFields, Comments):
 
         service = self._polarion.getService('Tracker')
         service.addLinkedItem(self.uri, workitem.uri, role={'id': link_type})
-        self._reloadFromPolarion()
-        workitem._reloadFromPolarion()
+        # self._reloadFromPolarion()
+        # workitem._reloadFromPolarion()
 
     def removeLinkedItem(self, workitem, role=None):
         """
