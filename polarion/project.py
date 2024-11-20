@@ -268,6 +268,30 @@ class Project(object):
             if a.id not in available:
                 available.append(a.id)
         return available
+    
+    def getEnumObject(self, enum_name):
+        """Get the options for a selected enumeration
+
+        :param enum_name: The first part of the enum name. Will be postpended by -enum.xml by Polarion API
+        :return: A object of options for the enum
+        :rtype: string<enum_name>: object<enum object>
+            <enum object:>
+                'default': False,
+                'enumId': 'aReviewStatus_SwFeatureOwner',
+                'hidden': False,
+                'id': '0',
+                'name': 'n/a',
+                'phantom': False,
+                'properties': None,
+                'sequenceNumber': 1
+        """
+        available = {}
+        service = self.polarion.getService('Tracker')
+        av = service.getAllEnumOptionsForId(self.id, enum_name)
+        for a in av:
+            if a.id not in available:
+                available[a.name] = a
+        return available
 
     def createDocument(self, location, name, title, allowed_workitem_types, structure_link_role, home_page_content=''):
         """
